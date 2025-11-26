@@ -1,0 +1,160 @@
+CDK
+
+FIRST CDK PROJECT
+=================
+=================
+=================
+# https://docs.aws.amazon.com/cdk/v2/guide/hello-world.html
+
+cd github
+mkdir FirstCDK
+cd FirstCDK
+npm install -g aws-cdk
+cdk --version
+python --version
+npm --version
+export AWS_PROFILE=misp
+aws s3 ls
+
+CDK
+===
+===
+
+cdk init app --language python
+
+# I now have the basic CDK files and directories
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+
+#=========
+#HELLO-CDK
+# > .venv
+# > hello_cdk
+#   hello_cdk_stack.py
+# > tests
+#   > units
+#     test_hello_cdk_stack.py
+# .gitignore
+# app.py
+# cdk.json
+# README.md
+# requirements-dev.txt
+# requirements.txt
+# source.bat
+#=========
+
+# BOOTSTRAP AWS FOR A SPECIFIC CDK VERSION WHEN MULTIPLE REQUIRED
+	npx cdk bootstrap aws://891377055542/eu-west-2 
+    --cloudformation-execution-policies 	arn:aws:iam::aws:policy/AdministratorAccess
+	# creates "> cdk.out"
+	cdk bootstrap --termination-protection
+	aws cloudformation describe-stacks --query 	Stacks[0].EnableTerminationProtection"
+
+	# In app.py set the following to restrict this build to one and only one 	account; leave it out if the account is defined outside the cdk. 
+	#HelloCdkStack(app, "HelloCdkStack",
+	# env=cdk.Environment(account="638273403859", region="eu-west-2"),
+
+cdk list
+# HelloCdkStack
+
+cdk bootstrap
+cdk bootstrap --termination-protection
+# create the code
+cdk synth
+cdk deploy
+# y
+# https://67sicjltc6ahsl4kdthfundaga0ejjpb.lambda-url.eu-west-2.on.aws/
+# make a change
+cdk diff
+cdk deploy
+cdk destroy
+===========================================================
+===========================================================
+===========================================================
+
+CDK Workshop
+=================
+=================
+=================
+# https://catalog.us-east-1.prod.workshops.aws/workshops/10141411-0192-4021-afa8-2436f3c66bd8/en-US
+mkdir cdk_workshop
+cd cdk_workshop
+cdk init sample-app --language python
+pip install -r requirements.txt
+cdk bootstrap --- NO CHANGES, NOT NEEDED
+cdk deploy
+cdk diff
+cdk deploy
+mkdir lambda
+vi lambda/hello.py
+cdk diff
+cdk acknowledge 34892
+cdk deploy
+cdk deploy --hotswap
+cdk watch
+
+# CDK is now watching for changes and will deploy them automatically
+
+
+arn:aws:lambda:eu-west-2:891377055542:function:HelloCdkStack-HelloWorldFunctionB2AB6E79-puXdAfKffZAb
+$ aws lambda remove-permission --function-name HelloCdkStack-HelloWorldFunctionB2AB6E79-puXdAfKffZAb --statement-id <statement-id>
+
+HitCounter
+==========
+# create hitcounter.py at the top level
+# Write lambda/hitcount.py to do the hit counting
+# Edit hitcounter.py to add the lambda function and dynamodb table
+#  edit cdk_workshop_stack.py changed our API Gateway handler to  hello_with_counter.handler instead of my_lambda. This basically means that whenever our endpoint is hit, API Gateway will route the request to our hit counter handler, which will log the hit and relay it over to the my_lambda function. 
+# amend hitcounter.py to add the grant RW to _handler
+
+
+IMPORTING CUSTOM CONSTRUCTS
+===========================
+https://catalog.us-east-1.prod.workshops.aws/workshops/10141411-0192-4021-afa8-2436f3c66bd8/en-US/3000-python-workshop/500-import-custom-constructs
+
+TableViewer
+===========
+https://pypi.org/project/cdk-dynamo-table-view/
+# Update requirements.txt to include cdk-dyanmo-table-view
+# Add the TableViewer to cdk_woirkshop_stack.py
+# Edit hitcounter.py and define the dynamodb table 
+# Edit cdk_workshop_stack.py and set the table name
+
+ADVANCED TOPICS
+===============
+
+TESTING CONSTRUCTS
+==================
+https://catalog.us-east-1.prod.workshops.aws/workshops/10141411-0192-4021-afa8-2436f3c66bd8/en-US/3000-python-workshop/600-advanced-topics/650-construct-testing
+
+# Uses the CDK assertions (aws_cdk.assertions) library. The library contains 
+# several helper functions for writing unit and integration tests.
+pip install -r requirements-dev.txt
+# Create a test for the dynamodb
+mkdir -p tests/unit
+touch tests/__init__.py
+touch tests/unit/__init__.py
+touch tests/unit/test_cdk_workshop.py
+vi tests/unit/test_cdk_workshop.py
+:
+# simple test to ensure the synthesized stack includes a DynamoDB table.
+python -m pytest
+
+# TDD (Test Driven Development). A simple example, add a requirement that the DynamoDB table be encrypted.
+
+VSALIDATION TESTS
+===============
+https://catalog.us-east-1.prod.workshops.aws/workshops/10141411-0192-4021-afa8-2436f3c66bd8/en-US/3000-python-workshop/600-advanced-topics/650-construct-testing/670-validation-tests
+
+
+
+
+
+
+
+
+
+
+
+
+
