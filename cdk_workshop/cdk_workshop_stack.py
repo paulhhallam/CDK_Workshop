@@ -1,6 +1,4 @@
 
-
-from constructs import Construct
 """
 AWS CDK Stack for a serverless application with API Gateway and hit counting.
 
@@ -16,7 +14,7 @@ Components:
 Attributes:
     None
 """
-
+from constructs import Construct
 from aws_cdk import (
     Stack,
     aws_lambda as _lambda,
@@ -27,7 +25,7 @@ from cdk_dynamo_table_view import TableViewer
 from hitcounter import HitCounter
 
 class CdkWorkshopStack(Stack):
-"""Stack for the CDK Workshop application."""
+    """ Stack for the CDK Workshop application. """
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -53,5 +51,4 @@ class CdkWorkshopStack(Stack):
             title='Hello Hits',
             table=hello_with_counter.table
         )
-
 
